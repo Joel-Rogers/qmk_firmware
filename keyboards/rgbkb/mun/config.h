@@ -36,8 +36,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MATRIX_IO_DELAY 5
 
 /* Touchbar adjustments */
-#define TOUCH_DEADZONE 25 // width of a "button", wider inputs will be interpreted as a swipe
-#define TOUCH_TERM 250 // time of a "button" touch, longer inputs will be a swipe
+#define TOUCH_DEADZONE 50 // width of a "button", wider inputs will be interpreted as a swipe
+#define TOUCH_TERM 350 // time of a "button" touch, longer inputs will be a swipe
 #define TOUCH_RESOLUTION 10 // sensitivity of swipes, lower=faster
 
 /* Encoder Configuration */
@@ -88,3 +88,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define TOUCH_UPDATE_INTERVAL 33
 #define OLED_UPDATE_INTERVAL 33
 #define TAP_CODE_DELAY 5
+
+// Disable the default touchbar behaviour (currently necessary if you want to use the touchbar for
+// layer switching)
+//#define MUN_CUSTOM_TOUCH_ENCODERS //No longer necessary
