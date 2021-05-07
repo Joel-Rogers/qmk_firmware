@@ -42,3 +42,6 @@ OPT_DEFS += -DOLED_FONT_H=\"../common/glcdfont.c\"
 OPT_DEFS += -Ikeyboards/rgbkb/common
 
 DEFAULT_FOLDER = rgbkb/mun/rev1
+
+RAW_ENABLE = no 		# Enable raw HID - currently disabled as is of almost no use on Windows
+CONSOLE_ENABLE = yes 	# Enable debugging info output - will hijack for sending layer info to Arduino

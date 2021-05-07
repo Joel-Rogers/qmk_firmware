@@ -23,6 +23,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* USB Device descriptor parameter */
 #define VENDOR_ID       0x3535
 #define PRODUCT_ID      0x3505
+#define RAW_USAGE_PAGE  0xFF60
+#define RAW_USAGE_ID	0x61
 #define MANUFACTURER    RGBKB
 #define PRODUCT         Mün
 
