@@ -84,14 +84,14 @@ const keypos_t hand_swap_config[MATRIX_ROWS][MATRIX_COLS] = {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_COLEJDR] = LAYOUT(
-		RESET,   KC_UP,    KC_DOWN, KC_2,    KC_3,    KC_4,    KC_5,    KC_6,     KC_7,    KC_8,    KC_NO,   KC_LEFT, KC_RIGHT, TCH_TOG,
-		OS_ALT,  KC_NUHS,  KC_1,    KC_W,    KC_F,    KC_P,    KC_J,    KC_V,     KC_L,    KC_U,    KC_DOT,  KC_9,    KC_INS,   KC_MUTE,
-		KC_ESC,  KC_QUOT,  KC_Q,    KC_R,    KC_S,    KC_T,    KC_M,    KC_COMM,  KC_N,    KC_E,    KC_I,    KC_K,    KC_0,     KC_NUBS,
-		KC_LSFT, SFT_TAB,  KC_A,    KC_X,    KC_C,    KC_D,    KC_SLSH, KC_SCLN,  KC_H,    KC_G,    KC_B,    KC_O,    KC_MINS,  KC_NO,
-		KC_LALT, KC_LBRC,  KC_Z,    KC_GRV,  KC_DEL,  SWP_BCK, CTL_SPC, KC_SFTENT,KC_LALT, KC_LWIN, KC_NO,   KC_Y,    KC_RBRC,  ALT_F4,
+		RESET,   KC_UP,    KC_DOWN, KC_3,    KC_4,    KC_5,    KC_NO,   KC_NO,    KC_6,    KC_7,    KC_8,    KC_LEFT, KC_RIGHT, TCH_TOG,
+		OS_ALT,  KC_NUHS,  KC_2,    KC_J,    KC_Y,    KC_C,    KC_Z,    KC_B,     KC_V,    KC_H,    KC_K,    KC_9,    KC_INS,   KC_MUTE,
+		KC_ESC,  KC_1,     KC_U,    KC_S,    KC_I,    KC_N,    KC_P,    KC_G,     KC_T,    KC_R,    KC_E,    KC_M,    KC_0,     KC_NUBS,
+		KC_LSFT, SFT_TAB,  KC_A,    KC_W,    KC_COMM, KC_F,    KC_SLSH, KC_MINS,  KC_D,    KC_L,    KC_QUOT, KC_O,    KC_DOT,   KC_SCLN,
+		KC_LALT, KC_LBRC,  KC_X,    KC_GRV,  KC_DEL,  SWP_BCK, CTL_SPC, KC_SFTENT,KC_LALT, KC_LWIN, KC_LCTL, KC_Q,    KC_RBRC,  ALT_F4,
 
 		_______, _______,  _______, _______,                                                       _______, _______, _______, _______,
-		KC_HOME, KC_END,   FNNUM,   PUNC,    KC_NO,                                        KC_DEL, KC_BSPC, RGBGUI,  KC_CAPS,  QWERTY
+		KC_HOME, KC_END,   RGBGUI,   PUNC,    KC_NO,                                        KC_DEL, KC_BSPC, FNNUM,  KC_CAPS,  QWERTY
 	),
 
     [_FNNUM] = LAYOUT(
