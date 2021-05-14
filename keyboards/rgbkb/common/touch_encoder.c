@@ -114,10 +114,18 @@ enum {  // QT2120 registers
 
 bool     touch_initialized  = false;
 bool     touch_disabled = false;
+bool     is_swiping = false;  // tracks whether the user is currently swiping
+bool     is_holding = false;  // tracks whether the user is currently holding- I couldn't come up with a way to avoid these booleans, but I'm sure a more elegant approach exists
+//uint8_t  hold_start = 0;  // remembers the position of the start of the hold - for tracking transitions to slides //unnecessary, I think, as long as you don't update touch_processed[3]
+// without also setting is_swiping true
 uint8_t  touch_handness = 0;
 // touch_raw & touch_processed store the Detection Status, Key Status (x2), and Slider Position values
 uint8_t  touch_raw[4]       = { 0 };
 uint8_t  touch_processed[4] = { 0 };
+// JoelR note - I have interpreted touch_raw[0] as a boolean of whether or not the touchbar is currently being touched - if that assumption is wrong, then the logic I put in for holding will be wrong
+// in touch_encoder_update()
+// Additionally, I haven't touched touch_encoder_set_raw() because I don't understand how it works - but hopefully the main contributors can extend the logic to that relatively easily to get the
+// secondary half working
 
 uint16_t touch_timer        = 0;
 uint16_t touch_update_timer = 0;
@@ -157,21 +165,33 @@ void touch_encoder_init(void) {
 }
 
 __attribute__((weak)) void touch_encoder_tapped_kb(uint8_t index, uint8_t section) { touch_encoder_tapped_user(index, section); }
+__attribute__((weak)) void touch_encoder_holding_kb(uint8_t index, uint8_t section) { touch_encoder_holding_user(index, section); }
+__attribute__((weak)) void touch_encoder_released_kb(uint8_t index, uint8_t section) { touch_encoder_released_user(index, section); }
 __attribute__((weak)) void touch_encoder_update_kb(uint8_t index, bool clockwise) { touch_encoder_update_user(index, clockwise); }
 
 __attribute__((weak)) void touch_encoder_tapped_user(uint8_t index, uint8_t section) {}
+__attribute__((weak)) void touch_encoder_holding_user(uint8_t index, uint8_t section) {}
+__attribute__((weak)) void touch_encoder_released_user(uint8_t index, uint8_t section) {}
 __attribute__((weak)) void touch_encoder_update_user(uint8_t index, bool clockwise) {}
 
 static void touch_encoder_update_tapped(void) {
-    // Started touching, being counter for TOUCH_TERM
+    // Started touching, begin counter for TOUCH_TERM
     if (touch_processed[0] & SLIDER_BIT) {
         touch_timer = timer_read() + TOUCH_TERM;
         return;
     }
-
     // Touch held too long, bail
-    if (timer_expired(timer_read(), touch_timer)) return;
-
+    if (timer_expired(timer_read(), touch_timer)) {
+    	if (!is_swiping) {//then the user was holding
+			// release the held keycode here!
+    		!TODO;
+			//when released, reset the holding values
+			//hold_start = 0;//unnecessary, I think
+    		return;
+    	}
+    	is_swiping = false;
+		return;
+    }
     uint8_t section = touch_processed[3] / (UINT8_MAX / TOUCH_SEGMENTS + 1);
     xprintf("tap %d %d\n", touch_handness, section);
     if (is_keyboard_master()) {
@@ -199,13 +219,56 @@ static void touch_encoder_update_position_common(uint8_t* position, uint8_t raw,
     }
 }
 
+static void touch_encoder_update_holding(void) {
+    uint8_t section = touch_processed[3] / (UINT8_MAX / TOUCH_SEGMENTS + 1);
+    xprintf("holding %d %d\n", touch_handness, section);
+    if (is_keyboard_master()) {
+        if (!touch_disabled) {
+            touch_encoder_holding_kb(touch_handness, section);
+        }
+    }
+    else {
+        touch_slave_state.taps ^= (1 << section);
+    }
+}
+
+static void touch_encoder_update_release(void) {
+    uint8_t section = touch_processed[3] / (UINT8_MAX / TOUCH_SEGMENTS + 1);
+    xprintf("released %d %d\n", touch_handness, section);
+    if (is_keyboard_master()) {
+        if (!touch_disabled) {
+            touch_encoder_released_kb(touch_handness, section);
+        }
+    }
+    else {
+        touch_slave_state.taps ^= (1 << section);
+    }
+}
+
 static void touch_encoder_update_position(void) {
     // If the user touchs and moves enough, expire touch_timer faster and do encoder position logic instead
-    if (!timer_expired(timer_read(), touch_timer)) {
-        if ((uint8_t)(touch_raw[3] - touch_processed[3]) <= TOUCH_DEADZONE) return;
+	if (!timer_expired(timer_read(), touch_timer)) {
+        if ((uint8_t)(touch_raw[3] - touch_processed[3]) <= TOUCH_DEADZONE) return;  // bail if not held long enough AND not moved far enough
+        is_swiping = true;
         touch_timer = timer_read();
     }
-
+	// If the user has been holding one position (moving less than the deadzone) for longer
+	// than the TOUCH_TERM, then process as a hold (if this behaviour is enabled)
+#ifdef TOUCHBAR_HOLD_ENABLE  // I hope this is how this works...
+	if (!is_swiping){//then user did not start swiping in the first TOUCH_TERM, but they MIGHT start later
+		if ((uint8_t)(touch_raw[3] - touch_processed[3]) <= TOUCH_DEADZONE) {// then user is still in the deadzone (i.e. holding)
+			if (!is_holding){//then this is the first pass where the holding has been noticed
+				is_holding = true;
+				touch_encoder_update_holding();
+			}
+			return;  // then bail
+		}  // otherwise, this looks like it's turned into a swipe, so move on to the code for that (below)
+		// but first, deal with releasing the held key (if any)
+		touch_encoder_update_release();
+		is_holding = false;
+		is_swiping = true;
+	}
+#endif
     if (is_keyboard_master()) {
         touch_encoder_update_position_common(&touch_processed[3], touch_raw[3], touch_handness);
     }
@@ -237,6 +300,7 @@ void touch_encoder_update(void) {
         }
         if (delta & SLIDER_BIT) {
             touch_processed[3] = touch_raw[3];
+            //hold_start = touch_raw[3]; //unnecessary, I think
             if (!is_keyboard_master()) {
                 touch_slave_state.position = touch_raw[3];
                 touch_slave_state.taps ^= (1 << 7);
@@ -245,7 +309,8 @@ void touch_encoder_update(void) {
         }
     }
 
-    if ((touch_raw[0] & SLIDER_BIT) && touch_processed[3] != touch_raw[3]) {
+    if ((touch_raw[0] & SLIDER_BIT) && (touch_processed[3] != touch_raw[3])) {// can I/do I need to remove this extra check so I can hijack this function for holding??
+    	// Hopefully there's not too much of a performance cost.
         touch_encoder_update_position();
     }
 }

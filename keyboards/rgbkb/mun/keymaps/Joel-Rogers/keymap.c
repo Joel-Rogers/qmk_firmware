@@ -26,15 +26,14 @@ enum keymap_keycodes {
 #define COLEMAK  DF(_COLEMAK)
 #define GAME     DF(_GAME)
 
-// Toggled layers - Deprecated, now handled by custom functions above (which also send prints to the host
-// computer via the debugging console)
-#define FNNUM   TG(_FNNUM)
-#define PUNC    TG(_PUNC)
-#define RGBGUI  TG(_RGBGUI)
+// Toggled layers
 
 // Momentary Layers
 #define FN       MO(_FN)
 #define ADJUST   MO(_ADJUST)
+#define FNNUM    MO(_FNNUM)
+#define PUNC     MO(_PUNC)
+#define RGBGUI   MO(_RGBGUI)
 
 // Tap-hold keys
 #define SFT_TAB  LSFT_T(KC_TAB)
@@ -85,21 +84,21 @@ const keypos_t hand_swap_config[MATRIX_ROWS][MATRIX_COLS] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_COLEJDR] = LAYOUT(
 		RESET,   KC_UP,    KC_DOWN, KC_3,    KC_4,    KC_5,    KC_NO,   KC_NO,    KC_6,    KC_7,    KC_8,    KC_LEFT, KC_RIGHT, TCH_TOG,
-		OS_ALT,  KC_NUHS,  KC_2,    KC_J,    KC_Y,    KC_C,    KC_Z,    KC_B,     KC_V,    KC_H,    KC_K,    KC_9,    KC_INS,   KC_MUTE,
-		KC_ESC,  KC_1,     KC_U,    KC_S,    KC_I,    KC_N,    KC_P,    KC_G,     KC_T,    KC_R,    KC_E,    KC_M,    KC_0,     KC_NUBS,
+		OS_ALT,  KC_NUHS,  KC_2,    KC_J,    KC_Y,    KC_C,    KC_Z,    KC_V,     KC_M,    KC_H,    KC_K,    KC_9,    KC_INS,   KC_MUTE,
+		KC_ESC,  KC_1,     KC_U,    KC_S,    KC_I,    KC_N,    KC_P,    KC_G,     KC_T,    KC_R,    KC_E,    KC_B,    KC_0,     KC_NUBS,
 		KC_LSFT, SFT_TAB,  KC_A,    KC_W,    KC_COMM, KC_F,    KC_SLSH, KC_MINS,  KC_D,    KC_L,    KC_QUOT, KC_O,    KC_DOT,   KC_SCLN,
 		KC_LALT, KC_LBRC,  KC_X,    KC_GRV,  KC_DEL,  SWP_BCK, CTL_SPC, KC_SFTENT,KC_LALT, KC_LWIN, KC_LCTL, KC_Q,    KC_RBRC,  ALT_F4,
 
-		_______, _______,  _______, _______,                                                       _______, _______, _______, _______,
-		KC_HOME, KC_END,   RGBGUI,   PUNC,    KC_NO,                                        KC_DEL, KC_BSPC, FNNUM,  KC_CAPS,  QWERTY
+		_______, _______,  _______, _______,                                                        _______, _______, _______,  _______,
+		KC_HOME, KC_END,   FNNUM,   KC_CAPS, KC_NO,                                        KC_DEL,  KC_BSPC, RGBGUI,  PUNC,     QWERTY
 	),
 
     [_FNNUM] = LAYOUT(
         _______, KC_F1,    KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   _______,  _______, _______, _______, _______, _______,  KC_PSCR,
-        _______, KC_F7,    KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_PAST,  KC_P7,   KC_P8,   KC_P9,   _______, _______,  KC_NLCK,
-        KC_CAPS, KC_TAB,   KC_MUTE, KC_LPRN, KC_RPRN, KC_LCBR, KC_RCBR, KC_PSLS,  KC_P4,   KC_P5,   KC_P6,   KC_MINS,  KC_BSPC,  KC_INS,
+        _______, KC_F7,    KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_PAST,  KC_P7,   KC_P8,   KC_P9,   KC_BSPC, _______,  KC_NLCK,
+        KC_CAPS, KC_TAB,   KC_MUTE, KC_VOLD, KC_VOLU, KC_LCBR, KC_RCBR, KC_PSLS,  KC_P4,   KC_P5,   KC_P6,   KC_P0,   KC_MINS,  KC_INS,
 		_______, KC_LBRC,  KC_RBRC, KC_LALT, KC_LWIN, KC_MPRV, KC_MPLY, KC_MNXT,  KC_P1,   KC_P2,   KC_P3,   KC_EQL,  KC_PPLS,  _______,
-		_______, _______,  KC_LSFT, KC_VOLD, KC_VOLU, _______, _______, _______,  KC_P0,   _______, KC_PDOT, KC_LALT, KC_COMM,  KC_RALT,
+		_______, _______,  KC_LSFT, _______, _______, _______, _______, _______,  _______, _______, _______, KC_PDOT, KC_COMM,  KC_RALT,
 
 		_______, _______, _______, _______,                                                       _______, _______, _______, _______,
 		_______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______
@@ -108,9 +107,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_PUNC] = LAYOUT(
 		_______, _______,  _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______,  _______,
 		_______, _______,  _______, KC_LWIN, KC_DEL,  KC_BSPC, _______, KC_INS,   KC_Z,    KC_X,    KC_C,    _______, _______,  _______,
-		_______, _______,  KC_ESC,  KC_PND,  KC_PERC, KC_CIRC, _______, _______,  KC_EXLM, KC_AT,  KC_AMPR, KC_V,    _______,  _______,
-		_______, KC_CAPS,  KC_DLR,  _______, _______, _______, _______, _______,  KC_S,    KC_U,    KC_B,    KC_NUHS, KC_RSFT,  _______,
-		_______, _______,  KC_LSFT, _______, _______, _______, _______, _______,  _______, _______, _______, KC_I,    _______,  _______,
+		_______, _______,  KC_ESC,  KC_PND,  KC_PERC, KC_CIRC, _______, _______,  _______, _______, _______, KC_V,    _______,  _______,
+		_______, _______,  KC_DLR,  KC_EXLM, KC_AT,   KC_AMPR, _______, _______,  KC_S,    KC_U,    KC_B,    _______, KC_RSFT,  _______,
+		_______, _______,  KC_NUHS, _______, _______, _______, _______, _______,  _______, _______, _______, KC_I,    _______,  _______,
 
 		_______, _______, _______, _______,                                                       _______, _______, _______, _______,
 		_______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______
@@ -216,22 +215,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             touch_encoder_toggle();
             return false;  // Skip all further processing of this key
         case FNNUM:
-			if (record->event.pressed) {
-				// when keycode is pressed
-				print("layer fnnum\n");
-			}
+			print("layer fnnum\n");
 			return true;  // And process the key normally!
         case PUNC:
-			if (record->event.pressed) {
-				// when keycode is pressed
-				print("layer punc\n");
-			}
+			print("layer punc\n");
 			return true;  // And process the key normally!
         case RGBGUI:
-			if (record->event.pressed) {
-				// when keycode is pressed
-				print("layer rgbgui\n");
-			}
+			print("layer rgbgui\n");
 			return true;  // And process the key normally!
         case KC_CAPS:
 			if (record->event.pressed) {

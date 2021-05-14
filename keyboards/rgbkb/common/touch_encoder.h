@@ -49,14 +49,23 @@ bool touch_encoder_toggled(void);
 // Called when touch encoder is tapped, weak function overridable by the kb
 void touch_encoder_tapped_kb(uint8_t index, uint8_t section);
 
+// Called when touch encoder is held, weak function overridable by the kb
+void touch_encoder_holding_kb(uint8_t index, uint8_t section);
+void touch_encoder_released_kb(uint8_t index, uint8_t section);
+
 // Called when touch encoder is slid, weak function overridable by the kb
 void touch_encoder_update_kb(uint8_t index, bool clockwise);
 
 // Called when touch encoder is tapped, weak function overridable by the user
 void touch_encoder_tapped_user(uint8_t index, uint8_t section);
 
+// Called when touch encoder is held, weak function overridable by the user
+void touch_encoder_holding_user(uint8_t index, uint8_t section);
+void touch_encoder_released_user(uint8_t index, uint8_t section);
+
 // Called when touch encoder is slid, weak function overridable by the user
 void touch_encoder_update_user(uint8_t index, bool clockwise);
+
 
 // For split transport only
 typedef struct {

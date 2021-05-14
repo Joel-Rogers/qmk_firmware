@@ -42,8 +42,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MATRIX_IO_DELAY 5
 
 /* Touchbar adjustments */
-#define TOUCH_DEADZONE 50 // width of a "button", wider inputs will be interpreted as a swipe
-#define TOUCH_TERM 350 // time of a "button" touch, longer inputs will be a swipe - 350 (ms) works well,
+#define TOUCH_DEADZONE 50 // width of a "button" for tap/hold purposes, wider inputs will be interpreted as a swipe
+#define TOUCH_TERM 350 // time of a "button" touch, longer inputs will be a swipe or hold - 350 (ms) works well,
 // but can set arbitrarily high (e.g. 50000) for hold behaviour
 #define TOUCH_RESOLUTION 10 // sensitivity of swipes, lower=faster
 
