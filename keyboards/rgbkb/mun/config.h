@@ -100,3 +100,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // Disable the default touchbar behaviour (currently necessary if you want to use the touchbar for
 // layer switching)
 //#define MUN_CUSTOM_TOUCH_ENCODERS //No longer necessary
+#define TOUCHBAR_HOLD_ENABLE
