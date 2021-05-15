@@ -11,7 +11,7 @@ QUANTUM_LIB_SRC += i2c_master.c
 #
 BOOTMAGIC_ENABLE = no       # Virtual DIP switch configuration
 ## (Note that for BOOTMAGIC on Teensy LC you have to use a custom .ld script.)
-MOUSEKEY_ENABLE = no        # Mouse keys
+MOUSEKEY_ENABLE = yes        # Mouse keys (nice for touchbar)
 EXTRAKEY_ENABLE = yes       # Audio control and System control
 CONSOLE_ENABLE = yes        # Console for debug
 COMMAND_ENABLE = no         # Commands for debug and configuration
@@ -45,3 +45,5 @@ DEFAULT_FOLDER = rgbkb/mun/rev1
 
 RAW_ENABLE = no 		# Enable raw HID - currently disabled as is of almost no use on Windows
 CONSOLE_ENABLE = yes 	# Enable debugging info output - will hijack for sending layer info to Arduino
+
+TAP_DANCE_ENABLE = yes

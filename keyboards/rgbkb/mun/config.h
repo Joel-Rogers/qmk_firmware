@@ -97,6 +97,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define OLED_UPDATE_INTERVAL 33
 #define TAP_CODE_DELAY 5
 
+#define MOUSEKEY_WHEEL_TIME_TO_MAX 1 // Set time to reach max scroll speed (mouse keys; default 40)
+#define MOUSEKEY_WHEEL_MAX_SPEED 20  // Set max number of scroll steps (default 8)
+
+// Tap-dance stuff
+#define TAPPING_TERM 150
+
 // Disable the default touchbar behaviour (currently necessary if you want to use the touchbar for
 // layer switching)
 //#define MUN_CUSTOM_TOUCH_ENCODERS //No longer necessary
