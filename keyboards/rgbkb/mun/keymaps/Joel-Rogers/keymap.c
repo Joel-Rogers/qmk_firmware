@@ -4,9 +4,10 @@
 
 enum keymap_layers {
 	_COLEJDR,
-    _FNNUM,
+    _NUM,
     _PUNC,
 	_RGBGUI,
+	_FNJ,
 	_QWERTY,
 	_COLEMAK,
 	_GAME,
@@ -31,15 +32,29 @@ enum keymap_keycodes {
 // Momentary Layers
 #define FN       MO(_FN)
 #define ADJUST   MO(_ADJUST)
-#define FNNUM    MO(_FNNUM)
+#define NUM      MO(_NUM)
 #define PUNC     MO(_PUNC)
 #define RGBGUI   MO(_RGBGUI)
+#define FNJ      MO(_FNJ)
 
 // Tap-hold keys
-#define SFT_TAB  LSFT_T(KC_TAB)
-#define CTL_SPC  LCTL_T(KC_SPC)
+#define JWIN_A  LGUI_T(KC_A)
+#define JALT_S  LALT_T(KC_S)
+#define JSFT_I  LSFT_T(KC_I)
+#define JCTL_N  LCTL_T(KC_N)
+#define JCTL_T  LCTL_T(KC_T)
+#define JSFT_R  LSFT_T(KC_R)
+#define JALT_E  LALT_T(KC_E)
+#define JWIN_O  LGUI_T(KC_O)
+//#define SFT_TAB  LSFT_T(KC_TAB)
+//#define CTL_SPC  LCTL_T(KC_SPC)
+
+// Momentary layer/tap keys
 #define FN_CAPS  LT(_FN, KC_CAPS)
 #define FN_ESC   LT(_FN, KC_ESC)
+#define ENTNUM      LT(_NUM, KC_ENT)
+#define SPCPUNC     LT(_PUNC, KC_SPC)
+#define TABGUI      LT(_RGBGUI, KC_TAB)
 
 // Tap-dance keys
 // Currently unused, but I'd like to have left and right alt on the same key (hold for left, tap for one-shot right),
@@ -85,19 +100,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_COLEJDR] = LAYOUT(
 		RESET,   KC_UP,    KC_DOWN, KC_3,    KC_4,    KC_5,    KC_NO,   KC_NO,    KC_6,    KC_7,    KC_8,    KC_LEFT, KC_RIGHT, TCH_TOG,
 		OS_ALT,  KC_NUHS,  KC_2,    KC_J,    KC_Y,    KC_C,    KC_Z,    KC_V,     KC_M,    KC_H,    KC_K,    KC_9,    KC_INS,   KC_MUTE,
-		KC_ESC,  KC_1,     KC_U,    KC_S,    KC_I,    KC_N,    KC_P,    KC_G,     KC_T,    KC_R,    KC_E,    KC_B,    KC_0,     KC_NUBS,
-		KC_LSFT, SFT_TAB,  KC_A,    KC_W,    KC_COMM, KC_F,    KC_SLSH, KC_MINS,  KC_D,    KC_L,    KC_QUOT, KC_O,    KC_DOT,   KC_SCLN,
-		KC_LALT, KC_LBRC,  KC_X,    KC_GRV,  KC_DEL,  SWP_BCK, CTL_SPC, KC_SFTENT,KC_LALT, KC_LWIN, KC_LCTL, KC_Q,    KC_RBRC,  ALT_F4,
+		KC_NO,   KC_1,     KC_U,    JALT_S,  JSFT_I,  JCTL_N,  KC_P,    KC_G,     JCTL_T,  JSFT_R,  JALT_E,  KC_B,    KC_0,     KC_NUBS,
+		KC_ESC,  TABGUI,   JWIN_A,  KC_W,    KC_COMM, KC_F,    KC_SLSH, KC_MINS,  KC_D,    KC_L,    KC_QUOT, JWIN_O,  KC_DOT,   KC_SCLN,
+		KC_NO,   KC_DEL,   KC_X,    KC_NO,   KC_NO,   SWP_BCK, SPCPUNC, ENTNUM,   KC_LALT, KC_LWIN, KC_NO,   KC_Q,    FNJ,      ALT_F4,
 
 		_______, _______,  _______, _______,                                                        _______, _______, _______,  _______,
-		KC_HOME, KC_END,   FNNUM,   KC_CAPS, KC_NO,                                        KC_DEL,  KC_BSPC, RGBGUI,  PUNC,     QWERTY
+		KC_HOME, KC_END,   NUM,     KC_CAPS, KC_NO,                                        KC_DEL,  KC_BSPC, RGBGUI,  PUNC,     QWERTY
 	),
 
-    [_FNNUM] = LAYOUT(
-        _______, KC_F1,    KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   _______,  _______, _______, _______, _______, _______,  KC_PSCR,
-        _______, KC_F7,    KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_PAST,  KC_P7,   KC_P8,   KC_P9,   KC_BSPC, _______,  KC_NLCK,
-        KC_CAPS, KC_TAB,   KC_MUTE, KC_VOLD, KC_VOLU, KC_LCBR, KC_RCBR, KC_PSLS,  KC_P4,   KC_P5,   KC_P6,   KC_P0,   KC_MINS,  KC_INS,
-		_______, KC_LBRC,  KC_RBRC, KC_LALT, KC_LWIN, KC_MPRV, KC_MPLY, KC_MNXT,  KC_P1,   KC_P2,   KC_P3,   KC_EQL,  KC_PPLS,  _______,
+    [_NUM] = LAYOUT(
+        _______, _______,  _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______,  KC_PSCR,
+        _______, _______,  _______, _______, _______, _______, _______, KC_PAST,  KC_P7,   KC_P8,   KC_P9,   KC_BSPC, _______,  KC_NLCK,
+		_______, _______,  KC_MUTE, KC_VOLD, KC_VOLU, _______, _______, KC_PSLS,  KC_P4,   KC_P5,   KC_P6,   KC_P0,   KC_MINS,  _______,
+		_______, _______,  _______, KC_LALT, KC_LWIN, KC_MPRV, KC_MPLY, KC_MNXT,  KC_P1,   KC_P2,   KC_P3,   KC_EQL,  KC_PPLS,  _______,
 		_______, _______,  KC_LSFT, _______, _______, _______, _______, _______,  _______, _______, _______, KC_PDOT, KC_COMM,  KC_RALT,
 
 		_______, _______, _______, _______,                                                       _______, _______, _______, _______,
@@ -106,10 +121,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_PUNC] = LAYOUT(
 		_______, _______,  _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______,  _______,
-		_______, _______,  _______, KC_LWIN, KC_DEL,  KC_BSPC, _______, KC_INS,   KC_Z,    KC_X,    KC_C,    _______, _______,  _______,
-		_______, _______,  KC_ESC,  KC_PND,  KC_PERC, KC_CIRC, _______, _______,  _______, _______, _______, KC_V,    _______,  _______,
-		_______, _______,  KC_DLR,  KC_EXLM, KC_AT,   KC_AMPR, _______, _______,  KC_S,    KC_U,    KC_B,    _______, KC_RSFT,  _______,
-		_______, _______,  KC_NUHS, _______, _______, _______, _______, _______,  _______, _______, _______, KC_I,    _______,  _______,
+		_______, _______,  _______, _______, _______, _______, _______, KC_SLSH,  KC_NUHS, _______, _______, _______, _______,  _______,
+		_______, _______,  _______, KC_LPRN, KC_RPRN, KC_LCBR, KC_RCBR, KC_NUBS,  KC_AMPR, KC_PAST, _______, _______, _______,  _______,
+		_______, _______,  KC_LBRC, KC_RBRC, KC_EXLM, KC_AT,   _______, KC_PND,   KC_DLR,  KC_PERC, KC_SCLN, KC_GRV,  _______,  _______,
+		_______, _______,  _______, _______, _______, _______, _______, _______,  _______, _______, KC_CIRC, _______, _______,  _______,
 
 		_______, _______, _______, _______,                                                       _______, _______, _______, _______,
 		_______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______
@@ -117,14 +132,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_RGBGUI] = LAYOUT(
 		_______, _______,  _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______,  _______,
-		_______, _______,  _______, KC_E,    KC_UP,   KC_D,    _______, _______,  _______, _______, _______, _______, _______,  _______,
-		_______, _______,  RGB_TOG, KC_LEFT, KC_DOWN, KC_RIGHT,_______, _______,  KC_LWIN, KC_LSFT, _______, _______, _______,  _______,
-		_______, _______,  _______, RGB_HUI, RGB_VAI, RGB_VAD, _______, _______,  RGB_MOD, RGB_RMOD,RGB_SAI, _______, _______,  _______,
-		_______, _______,  RGB_HUD, _______, _______, _______, _______, _______,  _______, _______, _______, RGB_SAD, _______,  _______,
+		_______, _______,  _______, _______, KC_UP,   _______, _______, _______,  _______, _______, _______, _______, _______,  _______,
+		_______, _______,  _______, KC_LEFT, KC_DOWN, KC_RIGHT,RGB_TOG, _______,  KC_LWIN, KC_LSFT, RGB_HUI, _______, _______,  _______,
+		_______, _______,  _______, _______, RGB_VAI, RGB_VAD, _______, _______,  RGB_MOD, RGB_RMOD,RGB_SAI, RGB_HUD, _______,  _______,
+		_______, _______,  _______, _______, _______, _______, _______, _______,  _______, _______, _______, RGB_SAD, _______,  _______,
 
 		_______, _______, _______, _______,                                                       _______, _______, _______, _______,
 		_______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______
     ),
+
+	[_FNJ] = LAYOUT(
+		_______, _______,  _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______,  _______,
+		_______, _______,  _______, KC_F3,   KC_F4,   KC_F5,   _______, _______,  KC_F7,   KC_F8,   KC_F9,   _______, _______,  _______,
+		_______, _______,  KC_F2,   _______, _______, _______, KC_F6,   _______,  _______, _______, _______, _______, _______,  _______,
+		_______, KC_F1,    _______, _______, _______, _______, _______, _______,  KC_F10,  KC_F11,  KC_F12,  _______, _______,  _______,
+		_______, _______,  _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______,  _______,
+
+		_______, _______, _______, _______,                                                       _______, _______, _______, _______,
+		_______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______
+	),
 	/* QWERTY
 	 * .--------------------------------------------------------------.  .--------------------------------------------------------------.
 	 * | `~/ESC | 1      | 2      | 3      | 4      | 5      |   -    |  |    =   | 6      | 7      | 8      | 9      | 0      | Bckspc |
@@ -152,7 +178,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		KC_LCTL, KC_LGUI, KC_LALT, RGB_TOG, ADJUST,  KC_SPC,  KC_DEL,    KC_ENT,    KC_SPC,  KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,KC_RCTL,
 
 		_______, _______,  _______, _______,                                                       _______, _______, _______, _______,
-		KC_HOME, KC_END,   FNNUM,   PUNC,    KC_NO,                                        KC_DEL, KC_BSPC, RGBGUI,  KC_CAPS,  COLEJDR
+		KC_HOME, KC_END,   NUM,   PUNC,    KC_NO,                                        KC_DEL, KC_BSPC, RGBGUI,  KC_CAPS,  COLEJDR
 	),
 
 	[_COLEMAK] = LAYOUT(
@@ -214,14 +240,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case TCH_TOG:
             touch_encoder_toggle();
             return false;  // Skip all further processing of this key
-        case FNNUM:
-			print("layer fnnum\n");
+        case NUM:
+			print("layer num\n");
 			return true;  // And process the key normally!
         case PUNC:
 			print("layer punc\n");
 			return true;  // And process the key normally!
-        case RGBGUI:
+		case RGBGUI:
 			print("layer rgbgui\n");
+			return true;  // And process the key normally!
+        case ENTNUM:
+			print("layer num\n");
+			return true;  // And process the key normally!
+        case SPCPUNC:
+			print("layer punc\n");
+			return true;  // And process the key normally!
+        case TABGUI:
+			print("layer rgbgui\n");
+			return true;  // And process the key normally!
+        case FNJ:
+			//print("layer fn\n");//not currently handled by Python/Arduino
 			return true;  // And process the key normally!
         case KC_CAPS:
 			if (record->event.pressed) {
