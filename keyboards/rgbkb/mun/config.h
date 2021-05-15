@@ -98,10 +98,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define TAP_CODE_DELAY 5
 
 #define MOUSEKEY_WHEEL_TIME_TO_MAX 1 // Set time to reach max scroll speed (mouse keys; default 40)
-#define MOUSEKEY_WHEEL_MAX_SPEED 20  // Set max number of scroll steps (default 8)
+#define MOUSEKEY_WHEEL_MAX_SPEED 100  // Set max number of scroll steps (default 8)
 
-// Tap-dance stuff
-#define TAPPING_TERM 150
+#define TAPPING_TERM 150  // Tap-dance/tap-hold term duration
+#define IGNORE_MOD_TAP_INTERRUPT  // Better for home row mods
 
 // Disable the default touchbar behaviour (currently necessary if you want to use the touchbar for
 // layer switching)
